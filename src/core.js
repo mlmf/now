@@ -15,35 +15,35 @@ class Now {
     this.init();
   }
 
-  year() {
+  Year() {
     return this.year;
   }
 
-  month() {
+  Month() {
     return this.month;
   }
 
-  date() {
+  Date() {
     return this.date;
   }
 
-  weekDay() {
+  WeekDay() {
     return this.weekDay;
   }
 
-  hour() {
+  Hour() {
     return this.hour;
   }
 
-  minute() {
+  Minute() {
     return this.minute;
   }
 
-  second() {
+  Second() {
     return this.second;
   }
 
-  milliSecond() {
+  MilliSecond() {
     return this.milliSecond;
   }
 
@@ -68,6 +68,8 @@ class Now {
         return new Date(args[0], args[1], args[2], args[3], args[4]);
       case 6:
         return new Date(args[0], args[1], args[2], args[3], args[4], args[5]);
+      case 7:
+        return new Date(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
       default:
         return new Date(args);
     }
@@ -101,10 +103,6 @@ class Now {
 
   beginningOfDay() {
     return truncate.call(this, 'date');
-  }
-
-  fullYear() {
-    return this.now.getFullYear();
   }
 }
 
