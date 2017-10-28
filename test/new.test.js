@@ -37,8 +37,13 @@ test('create by five args', () => {
 });
 
 test('create by six args', () => {
-  const now = new Now(2017, 10, 10, 10, 10, 100);
-  const compare = new Date(2017, 10, 10, 10, 10, 100);
+  const now = new Now(2017, 10, 10, 10, 10, 10);
+  const compare = new Date(2017, 10, 10, 10, 10, 10);
   expect(now.value).toBe(+compare);
 });
 
+test('create by seven args', () => {
+  const now = new Now(2017, 10, 10, 10, 10, 10, 100);
+  const compare = new Date(2017, 10, 10, 10, 10, 10, 100);
+  expect(now.value).toBe(+compare);
+});
