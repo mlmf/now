@@ -1,24 +1,57 @@
+/* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["createNow"] }] */
 import {
   truncate,
-  slice,
   invalidDateError,
   invalidDateRegExp,
 } from './utils';
 
 class Now {
-  constructor() {
-    this.now = this._now(arguments);
+  constructor(...args) {
+    this.now = this.createNow(args);
     if (invalidDateRegExp.test(this.now)) {
       throw new TypeError(invalidDateError);
     }
     this.init();
   }
 
+  year() {
+    return this.year;
+  }
+
+  month() {
+    return this.month;
+  }
+
+  date() {
+    return this.date;
+  }
+
+  weekDay() {
+    return this.weekDay;
+  }
+
+  hour() {
+    return this.hour;
+  }
+
+  minute() {
+    return this.minute;
+  }
+
+  second() {
+    return this.second;
+  }
+
+  milliSecond() {
+    return this.milliSecond;
+  }
+
   get value() {
     return +this.now;
   }
 
-  _now(args) {
+  createNow(args) {
     const len = args.length;
     switch (len) {
       case 0:
@@ -41,19 +74,21 @@ class Now {
   }
 
   init() {
-    let month = this.now.getMonth() + 1;
-    let day = this.now.getDate();
-    let hour = this.now.getHours();
-    let minute = this.now.getMinutes();
-    let second = this.now.getSeconds();
-    let milliSecond = this.now.getMilliseconds();
-    this._year = this.now.getFullYear();
-    this._month = month < 10 ? `0${month}` : month;
-    this._day = day < 10 ? `0${day}` : day;
-    this._hour = hour < 10 ? `0${hour}` : hour;
-    this._minute = minute < 10 ? `0${minute}` : minute;
-    this._second = second < 10 ? `0${second}` : second;
-    this._milliSecond = milliSecond < 10 ? `0${milliSecond}` : milliSecond;
+    this.year = this.now.getFullYear();
+    this.month = this.now.getMonth() + 1;
+    this.date = this.now.getDate();
+    this.hour = this.now.getHours();
+    this.minute = this.now.getMinutes();
+    this.second = this.now.getSeconds();
+    this.milliSecond = this.now.getMilliseconds();
+    this.weekDay = this.now.getDay();
+    this._year = this.year;
+    this._month = this.month < 10 ? `0${this.month}` : this.month;
+    this._date = this.date < 10 ? `0${this.date}` : this.date;
+    this._hour = this.hour < 10 ? `0${this.hour}` : this.hour;
+    this._minute = this.minute < 10 ? `0${this.minute}` : this.minute;
+    this._second = this.second < 10 ? `0${this.second}` : this.second;
+    this._milliSecond = this.milliSecond < 10 ? `0${this.milliSecond}` : this.milliSecond;
   }
 
   beginningOfMinute() {
@@ -65,7 +100,7 @@ class Now {
   }
 
   beginningOfDay() {
-    return truncate.call(this, 'day');
+    return truncate.call(this, 'date');
   }
 
   fullYear() {

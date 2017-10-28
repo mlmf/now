@@ -4,7 +4,8 @@
   "description": "now is a time toolkit for javascript",
   "main": "now.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint": "./node_modules/.bin/eslint --fix ./src"
   },
   "repository": {
     "type": "git",
