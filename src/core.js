@@ -174,6 +174,11 @@ class Now {
     clone.addDays(-weekDay);
     return clone.truncate('day');
   }
+
+  beginningOfMonth() {
+    const clone = this.clone();
+    return clone.truncate('month');
+  }
 }
 
 export default Now;
