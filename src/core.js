@@ -4,8 +4,8 @@ import {
   invalidDateRegExp,
 } from './utils';
 
-// const metaSecond = 1000;
-// const metaMinute = 60 * metaSecond;
+const metaSecond = 1000;
+const metaMinute = 60 * metaSecond;
 // const metaHour = 60 * metaMinute;
 // const metaDay = 24 * metaHour;
 
@@ -137,18 +137,22 @@ class Now {
     }
   }
 
-  parse() {
+  parse(ifMiliSecond) {
     const year = this.now.getFullYear();
     let month = this.now.getMonth() + 1;
     let date = this.now.getDate();
     let hour = this.now.getHours();
     let minute = this.now.getMinutes();
     let second = this.now.getSeconds();
+    const milliSecond = this.now.getMilliseconds();
     month = month < 10 ? `0${month}` : month;
     date = date < 10 ? `0${date}` : date;
     hour = hour < 10 ? `0${hour}` : hour;
     minute = minute < 10 ? `0${minute}` : minute;
     second = second < 10 ? `0${second}` : second;
+    if (ifMiliSecond) {
+      return `${year}-${month}-${date} ${hour}:${minute}:${second}.${milliSecond}`;
+    }
     return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
   }
 
@@ -194,6 +198,11 @@ class Now {
   beginningOfYear() {
     const clone = this.clone();
     return clone.truncate('year');
+  }
+
+  endOfMinute() {
+    const clone = this.clone();
+    return clone.beginningOfMinute().addMilliSeconds(metaMinute - 1);
   }
 }
 
