@@ -166,22 +166,22 @@ class Now {
     return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
   }
 
-  _beginningOfMinute() {
+  computeBeginningOfMinute() {
     const clone = this.clone();
     return clone.truncate('minute');
   }
 
-  _beginningOfHour() {
+  computeBeginningOfHour() {
     const clone = this.clone();
     return clone.truncate('hour');
   }
 
-  _beginningOfDay() {
+  computeBeginningOfDay() {
     const clone = this.clone();
     return clone.truncate('day');
   }
 
-  _beginningOfWeek() {
+  computeBeginningOfWeek() {
     const clone = this.clone();
     let weekDay = clone.now.getDay();
     if (clone.firstDayMonday) {
@@ -194,68 +194,68 @@ class Now {
     return clone.truncate('day');
   }
 
-  _beginningOfMonth() {
+  computeBeginningOfMonth() {
     const clone = this.clone();
     return clone.truncate('month');
   }
 
-  _beginningOfQuarter() {
-    const clone = this.clone()._beginningOfMonth();
+  computeBeginningOfQuarter() {
+    const clone = this.clone().computeBeginningOfMonth();
     const offset = clone.now.getMonth() % 3;
     return clone.addMonths(-offset);
   }
 
-  _beginningOfYear() {
+  computeBeginningOfYear() {
     const clone = this.clone();
     return clone.truncate('year');
   }
 
   beginningOfMinute() {
-    return this._beginningOfMinute().now;
+    return this.computeBeginningOfMinute().now;
   }
 
   beginningOfHour() {
-    return this._beginningOfHour().now;
+    return this.computeBeginningOfHour().now;
   }
 
   beginningOfDay() {
-    return this._beginningOfDay().now;
+    return this.computeBeginningOfDay().now;
   }
 
   beginningOfWeek() {
-    return this._beginningOfWeek().now;
+    return this.computeBeginningOfWeek().now;
   }
 
   beginningOfMonth() {
-    return this._beginningOfMonth().now;
+    return this.computeBeginningOfMonth().now;
   }
 
   beginningOfQuarter() {
-    return this._beginningOfQuarter().now;
+    return this.computeBeginningOfQuarter().now;
   }
 
   beginningOfYear() {
-    return this._beginningOfYear().now;
+    return this.computeBeginningOfYear().now;
   }
 
   endOfMinute() {
     const clone = this.clone();
-    return clone._beginningOfMinute().addMilliSeconds(metaMinute - 1).now;
+    return clone.computeBeginningOfMinute().addMilliSeconds(metaMinute - 1).now;
   }
 
   endOfHour() {
     const clone = this.clone();
-    return clone._beginningOfHour().addMilliSeconds(metaHour - 1).now;
+    return clone.computeBeginningOfHour().addMilliSeconds(metaHour - 1).now;
   }
 
   endOfDay() {
     const clone = this.clone();
-    return clone._beginningOfDay().addMilliSeconds(metaDay - 1).now;
+    return clone.computeBeginningOfDay().addMilliSeconds(metaDay - 1).now;
   }
 
   endOfWeek() {
     const clone = this.clone();
-    return clone._beginningOfWeek().addMilliSeconds((7 * metaDay) - 1).now;
+    return clone.computeBeginningOfWeek().addMilliSeconds((7 * metaDay) - 1).now;
   }
 }
 
