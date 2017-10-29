@@ -1,8 +1,12 @@
 /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
 const ArrayProto = Array.prototype;
-const { toString } = Object.prototype.toString;
+const {
+  toString
+} = Object.prototype.toString;
 
-export const { slice } = ArrayProto.slice;
+export const {
+  slice
+} = ArrayProto.slice;
 export const invalidDateError = 'Invalid Date';
 export const invalidDateRegExp = /Invalid Date/;
 
@@ -23,15 +27,28 @@ export function isNaN(value) {
 }
 
 export function truncate(name) {
+  let year = this.now.getFullYear();
+  let month = this.now.getMonth() + 1;
+  let date = this.now.getDate();
+  let hour = this.now.getHours();
+  let minute = this.now.getMinutes();
+  let second = this.now.getSeconds();
+  let milliSecond = this.now.getMilliseconds();
+  month = month < 10 ? `0${month}` : month;
+  date = date < 10 ? `0${date}` : date;
+  hour = hour < 10 ? `0${hour}` : hour;
+  minute = minute < 10 ? `0${minute}` : minute;
+  second = second < 10 ? `0${second}` : second;
+  milliSecond = milliSecond < 10 ? `0${milliSecond}` : milliSecond;
   switch (name) {
     case 'minute':
-      return `${this._year}-${this._month}-${this._date} ${this._hour}:${this._minute}:00`;
+      return `${year}-${month}-${date} ${hour}:${minute}:00`;
     case 'hour':
-      return `${this._year}-${this._month}-${this._date} ${this._hour}:00:00`;
+      return `${year}-${month}-${date} ${hour}:00:00`;
     case 'date':
-      return `${this._year}-${this._month}-${this._date} 00:00:00`;
+      return `${year}-${month}-${date} 00:00:00`;
     default:
-      return `${this._year}-${this._month}-${this._date} ${this._hour}:${this._minute}:${this._second}`;
+      return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
   }
 }
 
