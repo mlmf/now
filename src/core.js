@@ -97,7 +97,9 @@ class Now {
   }
 
   clone() {
-    return new Now(this.now);
+    const clone = new Now(this.now);
+    clone.firstDayMonday = this.firstDayMonday;
+    return clone;
   }
 
   truncate(name) {
@@ -172,14 +174,14 @@ class Now {
   }
 
   beginningOfWeek() {
-    let weekDay = this.now.getDay();
-    if (this._firstDayMonday) {
+    const clone = this.clone();
+    let weekDay = clone.now.getDay();
+    if (clone.firstDayMonday) {
       if (weekDay === 0) {
         weekDay = 7;
       }
       weekDay -= 1;
     }
-    const clone = this.clone();
     clone.addDays(-weekDay);
     return clone.truncate('day');
   }
@@ -214,7 +216,11 @@ class Now {
     const clone = this.clone();
     return clone.beginningOfDay().addMilliSeconds(metaDay - 1);
   }
+
+  endOfWeek() {
+    const clone = this.clone();
+    return clone.beginningOfWeek().addMilliSeconds((7 * metaDay) - 1);
+  }
 }
 
 export default Now;
-
