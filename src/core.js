@@ -16,6 +16,7 @@ class Now {
     if (invalidDateRegExp.test(this.now)) {
       throw new TypeError(invalidDateError);
     }
+    this.now.parse = this.parse;
   }
 
   get value() {
@@ -103,36 +104,37 @@ class Now {
   }
 
   truncate(name) {
+    const context = this.now;
     switch (name) {
       case 'year':
-        this.now.setMonth(0);
-        this.now.setDate(1);
-        this.now.setHours(0);
-        this.now.setMinutes(0);
-        this.now.setSeconds(0);
-        this.now.setMilliseconds(0);
+        context.setMonth(0);
+        context.setDate(1);
+        context.setHours(0);
+        context.setMinutes(0);
+        context.setSeconds(0);
+        context.setMilliseconds(0);
         return this;
       case 'month':
-        this.now.setDate(1);
-        this.now.setHours(0);
-        this.now.setMinutes(0);
-        this.now.setSeconds(0);
-        this.now.setMilliseconds(0);
+        context.setDate(1);
+        context.setHours(0);
+        context.setMinutes(0);
+        context.setSeconds(0);
+        context.setMilliseconds(0);
         return this;
       case 'day':
-        this.now.setHours(0);
-        this.now.setMinutes(0);
-        this.now.setSeconds(0);
-        this.now.setMilliseconds(0);
+        context.setHours(0);
+        context.setMinutes(0);
+        context.setSeconds(0);
+        context.setMilliseconds(0);
         return this;
       case 'hour':
-        this.now.setMinutes(0);
-        this.now.setSeconds(0);
-        this.now.setMilliseconds(0);
+        context.setMinutes(0);
+        context.setSeconds(0);
+        context.setMilliseconds(0);
         return this;
       case 'minute':
-        this.now.setSeconds(0);
-        this.now.setMilliseconds(0);
+        context.setSeconds(0);
+        context.setMilliseconds(0);
         return this;
       default:
         return this;
@@ -140,13 +142,19 @@ class Now {
   }
 
   parse(ifMiliSecond) {
-    const year = this.now.getFullYear();
-    let month = this.now.getMonth() + 1;
-    let date = this.now.getDate();
-    let hour = this.now.getHours();
-    let minute = this.now.getMinutes();
-    let second = this.now.getSeconds();
-    const milliSecond = this.now.getMilliseconds();
+    let context;
+    if (this instanceof Now) {
+      context = this.now;
+    } else {
+      context = this;
+    }
+    const year = context.getFullYear();
+    let month = context.getMonth() + 1;
+    let date = context.getDate();
+    let hour = context.getHours();
+    let minute = context.getMinutes();
+    let second = context.getSeconds();
+    const milliSecond = context.getMilliseconds();
     month = month < 10 ? `0${month}` : month;
     date = date < 10 ? `0${date}` : date;
     hour = hour < 10 ? `0${hour}` : hour;
@@ -158,22 +166,22 @@ class Now {
     return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
   }
 
-  beginningOfMinute() {
+  _beginningOfMinute() {
     const clone = this.clone();
     return clone.truncate('minute');
   }
 
-  beginningOfHour() {
+  _beginningOfHour() {
     const clone = this.clone();
     return clone.truncate('hour');
   }
 
-  beginningOfDay() {
+  _beginningOfDay() {
     const clone = this.clone();
     return clone.truncate('day');
   }
 
-  beginningOfWeek() {
+  _beginningOfWeek() {
     const clone = this.clone();
     let weekDay = clone.now.getDay();
     if (clone.firstDayMonday) {
@@ -186,41 +194,70 @@ class Now {
     return clone.truncate('day');
   }
 
-  beginningOfMonth() {
+  _beginningOfMonth() {
     const clone = this.clone();
     return clone.truncate('month');
   }
 
-  beginningOfQuarter() {
-    const clone = this.clone().beginningOfMonth();
+  _beginningOfQuarter() {
+    const clone = this.clone()._beginningOfMonth();
     const offset = clone.now.getMonth() % 3;
     return clone.addMonths(-offset);
   }
 
-  beginningOfYear() {
+  _beginningOfYear() {
     const clone = this.clone();
     return clone.truncate('year');
   }
 
+  beginningOfMinute() {
+    return this._beginningOfMinute().now;
+  }
+
+  beginningOfHour() {
+    return this._beginningOfHour().now;
+  }
+
+  beginningOfDay() {
+    return this._beginningOfDay().now;
+  }
+
+  beginningOfWeek() {
+    return this._beginningOfWeek().now;
+  }
+
+  beginningOfMonth() {
+    return this._beginningOfMonth().now;
+  }
+
+  beginningOfQuarter() {
+    return this._beginningOfQuarter().now;
+  }
+
+  beginningOfYear() {
+    return this._beginningOfYear().now;
+  }
+
   endOfMinute() {
     const clone = this.clone();
-    return clone.beginningOfMinute().addMilliSeconds(metaMinute - 1);
+    return clone._beginningOfMinute().addMilliSeconds(metaMinute - 1).now;
   }
 
   endOfHour() {
     const clone = this.clone();
-    return clone.beginningOfHour().addMilliSeconds(metaHour - 1);
+    return clone._beginningOfHour().addMilliSeconds(metaHour - 1).now;
   }
 
   endOfDay() {
     const clone = this.clone();
-    return clone.beginningOfDay().addMilliSeconds(metaDay - 1);
+    return clone._beginningOfDay().addMilliSeconds(metaDay - 1).now;
   }
 
   endOfWeek() {
     const clone = this.clone();
-    return clone.beginningOfWeek().addMilliSeconds((7 * metaDay) - 1);
+    return clone._beginningOfWeek().addMilliSeconds((7 * metaDay) - 1).now;
   }
 }
 
 export default Now;
+
