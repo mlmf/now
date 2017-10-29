@@ -6,7 +6,7 @@ import {
 
 const metaSecond = 1000;
 const metaMinute = 60 * metaSecond;
-// const metaHour = 60 * metaMinute;
+const metaHour = 60 * metaMinute;
 // const metaDay = 24 * metaHour;
 
 class Now {
@@ -203,6 +203,11 @@ class Now {
   endOfMinute() {
     const clone = this.clone();
     return clone.beginningOfMinute().addMilliSeconds(metaMinute - 1);
+  }
+
+  endOfHour() {
+    const clone = this.clone();
+    return clone.beginningOfHour().addMilliSeconds(metaHour - 1);
   }
 }
 
