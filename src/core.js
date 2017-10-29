@@ -148,15 +148,18 @@ class Now {
   }
 
   beginningOfMinute() {
-    return this.truncate('minute');
+    const clone = this.clone();
+    return clone.truncate('minute');
   }
 
   beginningOfHour() {
-    return this.truncate('hour');
+    const clone = this.clone();
+    return clone.truncate('hour');
   }
 
   beginningOfDay() {
-    return this.truncate('day');
+    const clone = this.clone();
+    return clone.truncate('day');
   }
 
   beginningOfWeek() {
