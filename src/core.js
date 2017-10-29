@@ -179,6 +179,11 @@ class Now {
     const clone = this.clone();
     return clone.truncate('month');
   }
+
+  beginningOfYear() {
+    const clone = this.clone();
+    return clone.truncate('year');
+  }
 }
 
 export default Now;
