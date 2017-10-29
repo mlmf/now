@@ -91,6 +91,11 @@ class Now {
     return this.now.addDays(7 * value);
   }
 
+  addMonths(value) {
+    this.now.setMonth(this.now.getMonth() + value);
+    return this;
+  }
+
   clone() {
     return new Now(this.now);
   }
@@ -178,6 +183,12 @@ class Now {
   beginningOfMonth() {
     const clone = this.clone();
     return clone.truncate('month');
+  }
+
+  beginningOfQuarter() {
+    const clone = this.clone().beginningOfMonth();
+    const offset = clone.now.getMonth() % 3;
+    return clone.addMonths(-offset);
   }
 
   beginningOfYear() {
