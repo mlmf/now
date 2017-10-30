@@ -97,6 +97,11 @@ class Now {
     return this;
   }
 
+  addYears(value) {
+    this.now.setFullYear(this.now.getFullYear() + value);
+    return this;
+  }
+
   clone() {
     const clone = new Now(this.now);
     clone.firstDayMonday = this.firstDayMonday;
@@ -261,6 +266,11 @@ class Now {
   endOfMonth() {
     const clone = this.clone();
     return clone.computeBeginningOfMonth().addMonths(1).addMilliSeconds(-1).now;
+  }
+
+  endOfYear() {
+    const clone = this.clone();
+    return clone.computeBeginningOfYear().addYears(1).addMilliSeconds(-1).now;
   }
 }
 
