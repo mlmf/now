@@ -2,6 +2,7 @@
 import {
   invalidDateError,
   invalidDateRegExp,
+  isDate,
 } from './utils';
 
 const metaSecond = 1000;
@@ -276,6 +277,16 @@ class Now {
   endOfYear() {
     const clone = this.clone();
     return clone.computeBeginningOfYear().addYears(1).addMilliSeconds(-1).now;
+  }
+
+  before(obj) {
+    if (obj === undefined || obj === null) {
+      throw new Error('before should not receive undefined');
+    } else if (!isDate(obj)) {
+      throw new TypeError('before require a Date type');
+    } else {
+      return this.now < obj;
+    }
   }
 }
 

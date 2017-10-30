@@ -1,12 +1,9 @@
 /* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
-const ArrayProto = Array.prototype;
-const {
-  toString,
-} = Object.prototype.toString;
+/* eslint prefer-destructuring: ["error", { "object": false }] */
 
-export const {
-  slice,
-} = ArrayProto.slice;
+const ArrayProto = Array.prototype;
+const toString = Object.prototype.toString;
+export const slice = ArrayProto.slice;
 export const invalidDateError = 'Invalid Date';
 export const invalidDateRegExp = /Invalid Date/;
 
