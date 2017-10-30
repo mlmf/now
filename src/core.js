@@ -257,6 +257,11 @@ class Now {
     const clone = this.clone();
     return clone.computeBeginningOfWeek().addMilliSeconds((7 * metaDay) - 1).now;
   }
+
+  endOfMonth() {
+    const clone = this.clone();
+    return clone.computeBeginningOfMonth().addMonths(1).addMilliSeconds(-1).now;
+  }
 }
 
 export default Now;
