@@ -22,3 +22,8 @@ export function isNumber(value) {
 export function isNaN(value) {
   return isNumber && value !== +value;
 }
+
+export function isUndefined(value) {
+  return value === undefined || value === null;
+}
+

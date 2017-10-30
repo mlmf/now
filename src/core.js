@@ -3,6 +3,7 @@ import {
   invalidDateError,
   invalidDateRegExp,
   isDate,
+  isUndefined,
 } from './utils';
 
 const metaSecond = 1000;
@@ -279,24 +280,26 @@ class Now {
     return clone.computeBeginningOfYear().addYears(1).addMilliSeconds(-1).now;
   }
 
-  before(obj) {
-    if (obj === undefined || obj === null) {
-      throw new Error('before should not receive undefined');
-    } else if (!isDate(obj)) {
-      throw new TypeError('before require a Date type');
+  compare(date1, date2) {
+    if (isUndefined(date1) || isUndefined(date2)) {
+      throw new Error('arguments can not be undefined');
+    } else if (!(isDate(date1) && isDate(date2))) {
+      throw new TypeError('arguments require Date type');
     } else {
-      return this.now < obj;
+      return (date1 < date2) ? -1 : (date1 > date2) ? 1 : 0;
     }
   }
 
+  before(obj) {
+    return this.compare(this.now, obj) === -1;
+  }
+
   after(obj) {
-    if (obj === undefined || obj === null) {
-      throw new Error('before should not receive undefined');
-    } else if (!isDate(obj)) {
-      throw new TypeError('before require a Date type');
-    } else {
-      return this.now > obj;
-    }
+    return this.compare(this.now, obj) === 1;
+  }
+
+  equal(obj) {
+    return this.compare(this.now, obj) === 0;
   }
 }
 
