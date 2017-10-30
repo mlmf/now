@@ -10,6 +10,7 @@ const metaSecond = 1000;
 const metaMinute = 60 * metaSecond;
 const metaHour = 60 * metaMinute;
 const metaDay = 24 * metaHour;
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 class Now {
   constructor(...args) {
@@ -19,6 +20,21 @@ class Now {
       throw new TypeError(invalidDateError);
     }
     this.now.parse = this.parse;
+    this.initIsDate();
+  }
+
+  initIsDate() {
+    let index = -1;
+    const len = days.length;
+
+    while (++index < len) {
+      this[`is${days[index]}`] = this.dateCheck(index);
+    }
+  }
+
+  dateCheck(index) {
+    const that = this;
+    return () => that.now.getDay() === index;
   }
 
   get value() {
