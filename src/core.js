@@ -106,7 +106,6 @@ class Now {
 
   clone() {
     const clone = new Now(this.now);
-    clone.firstDayMonday = this.firstDayMonday;
     return clone;
   }
 
@@ -190,6 +189,7 @@ class Now {
 
   computeBeginningOfWeek() {
     const clone = this.clone();
+    clone.firstDayMonday = this.firstDayMonday;
     let weekDay = clone.now.getDay();
     if (clone.firstDayMonday) {
       if (weekDay === 0) {
@@ -262,6 +262,7 @@ class Now {
 
   endOfWeek() {
     const clone = this.clone();
+    clone.firstDayMonday = this.firstDayMonday;
     return clone.computeBeginningOfWeek().addMilliSeconds((7 * metaDay) - 1).now;
   }
 
