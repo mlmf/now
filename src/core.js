@@ -288,6 +288,16 @@ class Now {
       return this.now < obj;
     }
   }
+
+  after(obj) {
+    if (obj === undefined || obj === null) {
+      throw new Error('before should not receive undefined');
+    } else if (!isDate(obj)) {
+      throw new TypeError('before require a Date type');
+    } else {
+      return this.now > obj;
+    }
+  }
 }
 
 export default Now;
