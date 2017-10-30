@@ -25,6 +25,10 @@ class Now {
     return +this.now;
   }
 
+  get date() {
+    return this.now;
+  }
+
   get year() {
     return this.now.getFullYear();
   }
@@ -218,67 +222,67 @@ class Now {
   }
 
   beginningOfMinute() {
-    return this.computeBeginningOfMinute().now;
+    return this.computeBeginningOfMinute().date;
   }
 
   beginningOfHour() {
-    return this.computeBeginningOfHour().now;
+    return this.computeBeginningOfHour().date;
   }
 
   beginningOfDay() {
-    return this.computeBeginningOfDay().now;
+    return this.computeBeginningOfDay().date;
   }
 
   beginningOfWeek() {
-    return this.computeBeginningOfWeek().now;
+    return this.computeBeginningOfWeek().date;
   }
 
   beginningOfMonth() {
-    return this.computeBeginningOfMonth().now;
+    return this.computeBeginningOfMonth().date;
   }
 
   beginningOfQuarter() {
-    return this.computeBeginningOfQuarter().now;
+    return this.computeBeginningOfQuarter().date;
   }
 
   beginningOfYear() {
-    return this.computeBeginningOfYear().now;
+    return this.computeBeginningOfYear().date;
   }
 
   endOfMinute() {
     const clone = this.clone();
-    return clone.computeBeginningOfMinute().addMilliSeconds(metaMinute - 1).now;
+    return clone.computeBeginningOfMinute().addMilliSeconds(metaMinute - 1).date;
   }
 
   endOfHour() {
     const clone = this.clone();
-    return clone.computeBeginningOfHour().addMilliSeconds(metaHour - 1).now;
+    return clone.computeBeginningOfHour().addMilliSeconds(metaHour - 1).date;
   }
 
   endOfDay() {
     const clone = this.clone();
-    return clone.computeBeginningOfDay().addMilliSeconds(metaDay - 1).now;
+    return clone.computeBeginningOfDay().addMilliSeconds(metaDay - 1).date;
   }
 
   endOfWeek() {
     const clone = this.clone();
     clone.firstDayMonday = this.firstDayMonday;
-    return clone.computeBeginningOfWeek().addMilliSeconds((7 * metaDay) - 1).now;
+    return clone.computeBeginningOfWeek().addMilliSeconds((7 * metaDay) - 1).date;
   }
 
   endOfMonth() {
     const clone = this.clone();
-    return clone.computeBeginningOfMonth().addMonths(1).addMilliSeconds(-1).now;
+    return clone.computeBeginningOfMonth().addMonths(1).addMilliSeconds(-1).date;
   }
 
   endOfQuarter() {
     const clone = this.clone();
-    return clone.computeBeginningOfQuarter().addMonths(3).addMilliSeconds(-1).now;
+    return clone.computeBeginningOfQuarter().addMonths(3).addMilliSeconds(-1).date;
   }
 
   endOfYear() {
     const clone = this.clone();
-    return clone.computeBeginningOfYear().addYears(1).addMilliSeconds(-1).now;
+    return clone.computeBeginningOfYear().addYears(1).addMilliSeconds(-1).date;
   }
 
   compare(date1, date2) {
