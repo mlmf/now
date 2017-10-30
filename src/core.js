@@ -268,6 +268,11 @@ class Now {
     return clone.computeBeginningOfMonth().addMonths(1).addMilliSeconds(-1).now;
   }
 
+  endOfQuarter() {
+    const clone = this.clone();
+    return clone.computeBeginningOfQuarter().addMonths(3).addMilliSeconds(-1).now;
+  }
+
   endOfYear() {
     const clone = this.clone();
     return clone.computeBeginningOfYear().addYears(1).addMilliSeconds(-1).now;
