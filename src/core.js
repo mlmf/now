@@ -1,4 +1,3 @@
-/* eslint no-underscore-dangle: ["error", { "allowAfterThis": true }] */
 import {
   invalidDateError,
   invalidDateRegExp,
