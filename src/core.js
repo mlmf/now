@@ -4,6 +4,7 @@ import {
   compare,
   slice,
   isDate,
+  isUndefined,
 } from './utils';
 
 const metaSecond = 1000;
@@ -337,15 +338,15 @@ class Now {
   }
 
   before(obj) {
-    return compare(this.now, obj) === -1;
+    return compare(this.date, obj) === -1;
   }
 
   after(obj) {
-    return compare(this.now, obj) === 1;
+    return compare(this.date, obj) === 1;
   }
 
   equal(obj) {
-    return compare(this.now, obj) === 0;
+    return compare(this.date, obj) === 0;
   }
 
   min(...args) {
@@ -356,11 +357,11 @@ class Now {
     if (len === 0) {
       throw new Error('min require at least one argument');
     }
-    const some = compares.some((value) => !isDate(value));
+    const some = compares.some(value => !isDate(value));
     if (some) {
-      throw new Error('min require Date type');
+      throw new TypeError('min require Date type');
     }
-    compares = [this.now].concat(compares);
+    compares = [this.date].concat(compares);
     while (index < len + 1) {
       if (+compares[index] < result) {
         result = compares[index];
@@ -378,11 +379,11 @@ class Now {
     if (len === 0) {
       throw new Error('max require at least one argument');
     }
-    const some = compares.some((value) => !isDate(value));
+    const some = compares.some(value => !isDate(value));
     if (some) {
-      throw new Error('max require Date type');
+      throw new TypeError('max require Date type');
     }
-    compares = [this.now].concat(compares);
+    compares = [this.date].concat(compares);
     while (index < len + 1) {
       if (+compares[index] > result) {
         result = compares[index];
@@ -390,6 +391,16 @@ class Now {
       index += 1;
     }
     return result;
+  }
+
+  between(date1, date2) {
+    if (isUndefined(date1) || isUndefined(date2)) {
+      throw new Error('arguments must be defined');
+    }
+    if (!(isDate(date1) && isDate(date2))) {
+      throw new TypeError('arguments must be Date type');
+    }
+    return this.after(date1) && this.before(date2);
   }
 }
 
