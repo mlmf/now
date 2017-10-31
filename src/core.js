@@ -13,13 +13,25 @@ const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 
 class Now {
   constructor(...args) {
-    this._firstDayMonday = false;
+    this.mondayFirst = false;
     this.now = new Date(...args);
     if (invalidDateRegExp.test(this.now)) {
       throw new TypeError(invalidDateError);
     }
     this.now.parse = this.parse;
+    this.initDate();
     this.initIsDate();
+  }
+
+  initDate() {
+    let index = 0;
+    const len = days.length;
+
+    while (index < len) {
+      const lower = days[index].toLowerCase();
+      this[lower] = this.dateIterator(index);
+      index += 1;
+    }
   }
 
   initIsDate() {
@@ -27,12 +39,34 @@ class Now {
     const len = days.length;
 
     while (index < len) {
-      this[`is${days[index]}`] = this.dateCheck(index);
+      this[`is${days[index]}`] = this.isDateIterator(index);
       index += 1;
     }
   }
 
-  dateCheck(index) {
+  dateIterator(index) {
+    const that = this;
+    return () => {
+      const weekDay = that.now.getDay();
+      that.mondayFirst = false;
+      if (weekDay === 0) {
+        // today is sunday, so get before sunday
+        let offset = index;
+        if (index === 0) {
+          offset = 7;
+        }
+        return that.computeBeginningOfWeek().addDays(-(7 - offset)).date;
+      }
+      // today is not sunday, so get after sunday
+      let offset = index;
+      if (index === 0) {
+        offset = 7;
+      }
+      return that.computeBeginningOfWeek().addDays(offset).date;
+    };
+  }
+
+  isDateIterator(index) {
     const that = this;
     return () => that.now.getDay() === index;
   }
@@ -78,11 +112,11 @@ class Now {
   }
 
   get firstDayMonday() {
-    return this._firstDayMonday;
+    return this.mondayFirst;
   }
 
   set firstDayMonday(value) {
-    this._firstDayMonday = value;
+    this.mondayFirst = value;
   }
 
   addMilliSeconds(value) {
@@ -315,4 +349,3 @@ class Now {
 }
 
 export default Now;
-
