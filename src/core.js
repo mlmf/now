@@ -356,14 +356,36 @@ class Now {
     if (len === 0) {
       throw new Error('min require at least one argument');
     }
-    const some = compares.some(value => !isDate(value));
+    const some = compares.some((value) => !isDate(value));
     if (some) {
       throw new Error('min require Date type');
     }
     compares = [this.now].concat(compares);
     while (index < len + 1) {
       if (+compares[index] < result) {
-        result = args[index];
+        result = compares[index];
+      }
+      index += 1;
+    }
+    return result;
+  }
+
+  max(...args) {
+    let result = -Infinity;
+    let compares = slice.call(args);
+    let index = 0;
+    const len = compares.length;
+    if (len === 0) {
+      throw new Error('max require at least one argument');
+    }
+    const some = compares.some((value) => !isDate(value));
+    if (some) {
+      throw new Error('max require Date type');
+    }
+    compares = [this.now].concat(compares);
+    while (index < len + 1) {
+      if (+compares[index] > result) {
+        result = compares[index];
       }
       index += 1;
     }
