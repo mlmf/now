@@ -82,35 +82,35 @@ class Now {
   }
 
   get year() {
-    return this.now.getFullYear();
+    return this.date.getFullYear();
   }
 
   get month() {
-    return this.now.getMonth() + 1;
+    return this.date.getMonth() + 1;
   }
 
   get day() {
-    return this.now.getDate();
+    return this.date.getDate();
   }
 
   get weekDay() {
-    return this.now.getDay();
+    return this.date.getDay();
   }
 
   get hour() {
-    return this.now.getHours();
+    return this.date.getHours();
   }
 
   get minute() {
-    return this.now.getMinutes();
+    return this.date.getMinutes();
   }
 
   get second() {
-    return this.now.getSeconds();
+    return this.date.getSeconds();
   }
 
   get milliSecond() {
-    return this.now.getMilliseconds();
+    return this.date.getMilliseconds();
   }
 
   get firstDayMonday() {
@@ -122,51 +122,51 @@ class Now {
   }
 
   addMilliSeconds(value) {
-    this.now.setMilliseconds(this.now.getMilliseconds() + value);
+    this.date.setMilliseconds(this.date.getMilliseconds() + value);
     return this;
   }
 
   addSeconds(value) {
-    this.now.setSeconds(this.now.getSeconds() + value);
+    this.date.setSeconds(this.date.getSeconds() + value);
     return this;
   }
 
   addMinutes(value) {
-    this.now.setMinutes(this.now.getMinutes() + value);
+    this.date.setMinutes(this.date.getMinutes() + value);
     return this;
   }
 
   addHours(value) {
-    this.now.setHours(this.now.getHours() + value);
+    this.date.setHours(this.date.getHours() + value);
     return this;
   }
 
   addDays(value) {
-    this.now.setDate(this.now.getDate() + value);
+    this.date.setDate(this.date.getDate() + value);
     return this;
   }
 
   addWeeks(value) {
-    return this.now.addDays(7 * value);
+    return this.date.addDays(7 * value);
   }
 
   addMonths(value) {
-    this.now.setMonth(this.now.getMonth() + value);
+    this.date.setMonth(this.date.getMonth() + value);
     return this;
   }
 
   addYears(value) {
-    this.now.setFullYear(this.now.getFullYear() + value);
+    this.date.setFullYear(this.date.getFullYear() + value);
     return this;
   }
 
   clone() {
-    const clone = new Now(this.now);
+    const clone = new Now(this.date);
     return clone;
   }
 
   truncate(name) {
-    const context = this.now;
+    const context = this.date;
     switch (name) {
       case 'year':
         context.setMonth(0);
@@ -206,7 +206,7 @@ class Now {
   parse(ifMiliSecond) {
     let context;
     if (this instanceof Now) {
-      context = this.now;
+      context = this.date;
     } else {
       context = this;
     }
@@ -246,7 +246,7 @@ class Now {
   computeBeginningOfWeek() {
     const clone = this.clone();
     clone.firstDayMonday = this.firstDayMonday;
-    let weekDay = clone.now.getDay();
+    let weekDay = clone.date.getDay();
     if (clone.firstDayMonday) {
       if (weekDay === 0) {
         weekDay = 7;
@@ -264,7 +264,7 @@ class Now {
 
   computeBeginningOfQuarter() {
     const clone = this.clone().computeBeginningOfMonth();
-    const offset = clone.now.getMonth() % 3;
+    const offset = clone.date.getMonth() % 3;
     return clone.addMonths(-offset);
   }
 
