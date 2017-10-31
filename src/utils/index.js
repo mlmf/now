@@ -27,3 +27,13 @@ export function isUndefined(value) {
   return value === undefined || value === null;
 }
 
+export function compare(date1, date2) {
+  if (isUndefined(date1) || isUndefined(date2)) {
+    throw new Error('arguments can not be undefined');
+  } else if (!(isDate(date1) && isDate(date2))) {
+    throw new TypeError('arguments require Date type');
+  } else {
+    return (date1 < date2) ? -1 : (date1 > date2) ? 1 : 0;
+  }
+}
+
