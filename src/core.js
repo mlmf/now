@@ -2,6 +2,8 @@ import {
   invalidDateError,
   invalidDateRegExp,
   compare,
+  slice,
+  isDate,
 } from './utils';
 
 const metaSecond = 1000;
@@ -345,6 +347,29 @@ class Now {
   equal(obj) {
     return compare(this.now, obj) === 0;
   }
+
+  min(...args) {
+    let result = Infinity;
+    let compares = slice.call(args);
+    let index = 0;
+    const len = compares.length;
+    if (len === 0) {
+      throw new Error('min require at least one argument');
+    }
+    const some = compares.some(value => !isDate(value));
+    if (some) {
+      throw new Error('min require Date type');
+    }
+    compares = [this.now].concat(compares);
+    while (index < len + 1) {
+      if (+compares[index] < result) {
+        result = args[index];
+      }
+      index += 1;
+    }
+    return result;
+  }
 }
 
 export default Now;
+
