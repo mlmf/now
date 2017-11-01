@@ -17,3 +17,11 @@ test('return the time elapsed since specify date', () => {
   timer(cb, 100);
 });
 
+test('return the time elapsed between two arguments', () => {
+  const now = new Now();
+  const date1 = new Date(2017, 9, 29, 17, 35, 20, 100);
+  const date2 = new Date(2017, 10, 29, 17, 35, 20, 100);
+  const result = date2 - date1;
+  expect(now.since(date1, date2)).toBe(result);
+});
+

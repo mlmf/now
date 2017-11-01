@@ -419,7 +419,10 @@ class Now {
   }
 
   // return the time elapsed since date
-  since(date) {
+  since(date, ...args) {
+    if (args.length > 0) {
+      return this.sub(args[0], date);
+    }
     const now = new Date();
     return this.sub(now, date);
   }
