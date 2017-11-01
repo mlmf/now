@@ -3,7 +3,8 @@ import Now from '../src/index';
 test('create by none args', () => {
   const now = new Now();
   const compare = new Date();
-  expect(now.value).toBe(+compare);
+  const result = Math.abs(now.date - compare) <= 1;
+  expect(result).toBe(true);
 });
 
 test('create by one arg', () => {
