@@ -5,6 +5,7 @@ import {
   slice,
   isDate,
   isUndefined,
+  minus,
 } from './utils';
 
 const metaSecond = 1000;
@@ -404,13 +405,12 @@ class Now {
   }
 
   sub(date) {
-    if (isUndefined(date)) {
-      throw new Error('arguments must be defined');
-    }
-    if (!isDate(date)) {
-      throw new TypeError('arguments must be Date type');
-    }
-    return this.date - date;
+    return minus(this.date, date);
+  }
+
+  elapse() {
+    const now = new Date();
+    return minus(now, this.date);
   }
 }
 

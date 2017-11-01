@@ -36,3 +36,13 @@ export function compare(date1, date2) {
     return (date1 < date2) ? -1 : (date1 > date2) ? 1 : 0;
   }
 }
+export function minus(date1, date2) {
+  if (isUndefined(date1) || isUndefined(date2)) {
+    throw new Error('arguments must be defined');
+  }
+  if (!(isDate(date1) && isDate(date2))) {
+    throw new TypeError('arguments must be Date type');
+  }
+  return date1 - date2;
+}
+
