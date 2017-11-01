@@ -405,7 +405,10 @@ class Now {
   }
 
   // return the duration this.date - date.
-  sub(date) {
+  sub(date, ...args) {
+    if (args.length > 0) {
+      return minus(date, args[0]);
+    }
     return minus(this.date, date);
   }
 
@@ -418,7 +421,7 @@ class Now {
   // return the time elapsed since date
   since(date) {
     const now = new Date();
-    return minus(now, date);
+    return this.sub(now, date);
   }
 }
 
