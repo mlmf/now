@@ -404,13 +404,21 @@ class Now {
     return this.after(date1) && this.before(date2);
   }
 
+  // return the duration this.date - date.
   sub(date) {
     return minus(this.date, date);
   }
 
+  // return the time elapsed by now
   elapse() {
     const now = new Date();
     return minus(now, this.date);
+  }
+
+  // return the time elapsed since date
+  since(date) {
+    const now = new Date();
+    return minus(now, date);
   }
 }
 
