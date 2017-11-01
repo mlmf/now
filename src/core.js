@@ -402,6 +402,16 @@ class Now {
     }
     return this.after(date1) && this.before(date2);
   }
+
+  sub(date) {
+    if (isUndefined(date)) {
+      throw new Error('arguments must be defined');
+    }
+    if (!isDate(date)) {
+      throw new TypeError('arguments must be Date type');
+    }
+    return this.date - date;
+  }
 }
 
 export default Now;
